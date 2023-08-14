@@ -1,0 +1,61 @@
+
+
+ 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../react.development.js"></script>
+  <script src="../react-dom.development.js"></script>
+  <script src="../babel.min.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="text/babel">
+    // 4. 结合useEffect,只在更新时触发
+    let app = document.querySelector('#app');
+    let root = ReactDOM.createRoot(app);
+    let { useState, useEffect, useRef } = React;
+    
+
+    let Welcome = (props) => {
+      // 响应式数据,具有记忆功能,点击后响应式数据加1
+      const [num, setNum] = useState(0);
+
+      const isUpdate = useRef(false) 
+
+      useEffect(()=>{// 只在点击时候触发
+       if (isUpdate.current) {
+        console.log(num);
+       }
+      })
+
+      const handleClick = () =>{
+        setNum(num + 1)
+        isUpdate.current = true
+
+        // console.log(num); // 还是之前的值
+
+      }
+  
+      return (
+        <div>
+          <button onClick={handleClick}>点击</button>
+        
+        </div>
+      );
+    }
+    
+    let element = (
+      <Welcome />
+    );
+    root.render(element);
+
+
+  </script>
+</body>
+</html>

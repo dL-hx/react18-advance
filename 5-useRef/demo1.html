@@ -1,0 +1,63 @@
+
+
+ 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../react.development.js"></script>
+  <script src="../react-dom.development.js"></script>
+  <script src="../babel.min.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="text/babel">
+    // 2. 函数组件的转发: React.forwardRef()
+    let app = document.querySelector('#app');
+    let root = ReactDOM.createRoot(app);
+    let { useState, useEffect, useRef, forwardRef } = React;
+    
+    let Head = forwardRef((props, ref)=> {
+      return (
+        <div>
+          hello Head
+          {/*将 ref 转发到子组件的input上 */}
+          <input ref={ref} type='text' />
+      </div>
+      )
+    })
+
+    let Welcome = (props) => {
+      const myRef = useRef()
+
+      const handleClick = () =>{
+        // 点击时候会触发子组件的focus事件
+        myRef.current.focus()
+      }
+  
+      return (
+        <div>
+          <button onClick={handleClick}>点击</button>
+          {/*ref 和组件关联*/}
+          <Head ref={myRef}></Head>
+        </div>
+      );
+    }
+    
+    let element = (
+      <Welcome />
+    );
+    root.render(element);
+
+    
+   
+
+    
+
+  </script>
+</body>
+</html>
